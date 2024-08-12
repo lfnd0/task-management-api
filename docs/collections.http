@@ -1,0 +1,11 @@
+@protocol = http
+@domain = localhost
+@port = 3000
+@baseURL = {{protocol}}://{{domain}}:{{port}}
+@contentType = application/json
+
+###
+GET {{baseURL}}
+
+###
+GET {{baseURL}}/users
