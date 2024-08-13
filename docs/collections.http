@@ -15,3 +15,11 @@ GET {{baseURL}}/users/ec54925e-4e72-4469-886e-a0123ebf1b11
 
 ###
 GET {{baseURL}}/users/paginated-users?limit=2&offset=1
+
+###
+POST {{baseURL}}/users/create
+Content-Type: {{contentType}}
+
+{
+    "username": "luke"
+}

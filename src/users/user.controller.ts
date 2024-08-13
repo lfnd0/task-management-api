@@ -1,4 +1,5 @@
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
+import { randomUUID } from 'node:crypto';
 import { users } from 'src/mocks/users';
 
 type UserParams = {
@@ -11,38 +12,65 @@ type UserQueries = {
   offset: string;
 };
 
-@Controller()
+type UserBody = {
+  username: string;
+};
+
+@Controller('/users')
 export class UserController {
-  @Get('/users')
+  @Get()
   getUsers() {
     return {
       users,
     };
   }
 
-  @Get('/users/paginated-users')
+  @Get('/paginated-users')
   getPagedUsers(@Query() queries: UserQueries) {
     const { limit, offset } = queries;
 
     const limitToNumber = Number(limit);
     const offsetToNumber = Number(offset);
 
-    const startIndex = (offsetToNumber - 1) * limitToNumber;
-    const endIndex = startIndex + limitToNumber;
+    const start = (offsetToNumber - 1) * limitToNumber;
+    const end = start + limitToNumber;
 
-    const paginatedUsers = users.slice(startIndex, endIndex);
+    const paginatedUsers = users.slice(start, end);
 
     return {
       users: paginatedUsers,
     };
   }
 
-  @Get('/users/:id/')
+  @Get('/:id')
   getUserById(@Param() params: UserParams) {
     const { id } = params;
 
+    const hasUser = users.find((user) => user.id === id);
+
+    if (hasUser) {
+      return {
+        user: hasUser,
+      };
+    }
+
     return {
-      user: users.find((user) => user.id === id) ?? 'user not found',
+      message: 'user not found',
+    };
+  }
+
+  @Post('/create')
+  postUser(@Body() payload: UserBody) {
+    const { username } = payload;
+    const newUser = {
+      id: randomUUID(),
+      username,
+    };
+
+    users.push(newUser);
+
+    return {
+      newUser,
     };
   }
 }
