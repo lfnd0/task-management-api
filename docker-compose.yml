@@ -1,0 +1,10 @@
+services:
+  user-management-postgresql:
+    container_name: user-management-postgresql
+    image: bitnami/postgresql
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRESQL_USERNAME=admin
+      - POSTGRESQL_PASSWORD=admin
+      - POSTGRESQL_DATABASE=user_management_database
