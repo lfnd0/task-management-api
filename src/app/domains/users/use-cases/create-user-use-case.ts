@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { hash } from 'bcrypt';
 import { PrismaService } from 'src/infra/database/prima.service';
 import { CreateUserDTO } from '../dtos/user.dto';
 
@@ -26,12 +27,14 @@ export class CreateUserUseCase {
       throw new Error('user already exists');
     }
 
+    const passwordHashed = await hash(password, 10);
+
     await this.prismaService.user.create({
       data: {
         name,
         username,
         email,
-        password_hash: password,
+        password_hash: passwordHashed,
       },
     });
   }
