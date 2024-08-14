@@ -4,3 +4,9 @@ export type CreateUserDTO = {
   email: string;
   password: string;
 };
+
+export type UserCreatedDTO = {
+  id: string;
+  created_at: Date;
+  updated_at: Date | null;
+};
