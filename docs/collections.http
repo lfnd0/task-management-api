@@ -17,3 +17,12 @@ Content-Type: {{contentType}}
     "email": "luiz.fernando@mail.com",
     "password": "hAVyqXbNEPBLV3n"
 }
+
+###
+POST {{baseURL}}/sign-in
+Content-Type: {{contentType}}
+
+{
+    "username": "lfnd0",
+    "password": "hAVyqXbNEPBLV3n"
+}
