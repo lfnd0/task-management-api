@@ -10,6 +10,14 @@ import { PrismaService } from 'src/infra/database/prima.service';
 export class UserPrismaRepository implements IUserRepository {
   constructor(private prismaService: PrismaService) {}
 
+  findUserByUsername(username: string): Promise<UserCreatedDTO | null> {
+    return this.prismaService.user.findUnique({
+      where: {
+        username,
+      },
+    });
+  }
+
   async findUserByUsernameOrEmail(
     username: string,
     email: string,

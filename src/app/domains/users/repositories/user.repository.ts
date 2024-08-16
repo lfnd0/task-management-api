@@ -1,6 +1,8 @@
 import { CreateUserDTO, UserCreatedDTO } from '../dtos/user.dto';
 
 export abstract class IUserRepository {
+  abstract findUserByUsername(username: string): Promise<UserCreatedDTO | null>;
+
   abstract findUserByUsernameOrEmail(
     username: string,
     email: string,
