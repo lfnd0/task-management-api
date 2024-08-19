@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { IUserRepository } from 'src/app/domains/users/repositories/user.repository';
 import { CreateUserUseCase } from 'src/app/domains/users/use-cases/create-user.usecase';
 import { PrismaService } from '../database/prima.service';
@@ -15,6 +16,7 @@ import { UserPrismaRepository } from './repositories/user-prisma.repository';
       provide: IUserRepository,
       useClass: UserPrismaRepository,
     },
+    JwtService,
   ],
 })
 export class UserModule {}

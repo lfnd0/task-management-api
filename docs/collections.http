@@ -3,6 +3,7 @@
 @port = 3000
 @baseURL = {{protocol}}://{{domain}}:{{port}}
 @contentType = application/json
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiMzM0YTlkMy1hNGE1LTRlMzctOGMyZS1hZmFiMGEzZGU3NjgiLCJ1c2VybmFtZSI6ImxmbmQwIiwiaWF0IjoxNzI0MDI5Njg1LCJleHAiOjE3MjQwMjk3NDV9.oi_dy_GVapqez-0Rr3aR2rtf6KYSE9pEYGHgy0s9rgE
 
 ###
 GET {{baseURL}}
@@ -26,3 +27,7 @@ Content-Type: {{contentType}}
     "username": "lfnd0",
     "password": "hAVyqXbNEPBLV3n"
 }
+
+###
+GET {{baseURL}}/users/profile
+Authorization: Bearer {{token}}
