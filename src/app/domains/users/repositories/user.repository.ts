@@ -9,4 +9,8 @@ export abstract class IUserRepository {
   ): Promise<UserCreatedDTO | null>;
 
   abstract createNewUser(data: CreateUserDTO): Promise<void>;
+
+  abstract findUserById(
+    userId: string,
+  ): Promise<{ user: Partial<UserCreatedDTO> } | null>;
 }

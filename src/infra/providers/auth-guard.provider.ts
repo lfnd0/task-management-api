@@ -22,7 +22,9 @@ export class AuthGuardProvider implements CanActivate {
           secret: env.JWT_SECRET,
         });
 
-        return verifiedToken;
+        request['user'] = verifiedToken;
+
+        return true;
       } catch (error) {
         throw new UnauthorizedException();
       }
@@ -34,10 +36,10 @@ export class AuthGuardProvider implements CanActivate {
   private extractTokenFromHeader(request: Request): string | null {
     const authHeader = request.headers.authorization;
 
-    if (!authHeader) {
-      return null;
+    if (authHeader) {
+      return authHeader.replace('Bearer ', '');
     }
 
-    return authHeader.replace('Bearer ', '');
+    return null;
   }
 }

@@ -41,4 +41,29 @@ export class UserPrismaRepository implements IUserRepository {
       },
     });
   }
+
+  async findUserById(
+    userId: string,
+  ): Promise<{ user: Partial<UserCreatedDTO> } | null> {
+    const userData = await this.prismaService.user.findUnique({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (userData) {
+      const { id, username, email, name } = userData;
+
+      return {
+        user: {
+          id,
+          username,
+          email,
+          name,
+        },
+      };
+    }
+
+    return null;
+  }
 }
