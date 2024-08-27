@@ -8,7 +8,7 @@ export abstract class IUserRepository {
     email: string,
   ): Promise<UserCreatedDTO | null>;
 
-  abstract createNewUser(data: CreateUserDTO): Promise<void>;
+  abstract createNewUser(userData: CreateUserDTO): Promise<void>;
 
   abstract findUserById(
     userId: string,
