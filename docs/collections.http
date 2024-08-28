@@ -31,3 +31,17 @@ Content-Type: {{contentType}}
 ###
 GET {{baseURL}}/users/profile
 Authorization: Bearer {{token}}
+
+###
+POST {{baseURL}}/tasks
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+    "title": "Study NestJS",
+    "description": "Watch classes and develop an API with NestJS.",
+    "status": "todo",
+    "priority": "high",
+    "start_at": "2024-08-27 18:00",
+    "end_at": "2021-08-27 20:00"
+}
