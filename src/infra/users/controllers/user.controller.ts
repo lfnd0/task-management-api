@@ -4,6 +4,7 @@ import {
   Get,
   HttpException,
   HttpStatus,
+  Logger,
   Post,
   Request,
   UseGuards,
@@ -20,6 +21,8 @@ import {
 
 @Controller('/users')
 export class UserController {
+  private readonly logger = new Logger(UserController.name);
+
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly userProfileUseCase: UserProfileUseCase,
@@ -31,6 +34,7 @@ export class UserController {
     try {
       await this.createUserUseCase.execute(userData);
     } catch (error) {
+      this.logger.error(error.message);
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }
@@ -41,6 +45,7 @@ export class UserController {
     try {
       return this.userProfileUseCase.execute(request.user.sub);
     } catch (error) {
+      this.logger.error(error.message);
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }

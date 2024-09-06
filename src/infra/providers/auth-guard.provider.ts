@@ -2,6 +2,7 @@ import {
   CanActivate,
   ExecutionContext,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -10,6 +11,8 @@ import { Request } from 'express';
 
 @Injectable()
 export class AuthGuardProvider implements CanActivate {
+  private readonly logger = new Logger(AuthGuardProvider.name);
+
   constructor(
     private jwtService: JwtService,
     private configService: ConfigService,
@@ -29,9 +32,12 @@ export class AuthGuardProvider implements CanActivate {
 
         return true;
       } catch (error) {
+        this.logger.error(error.message);
         throw new UnauthorizedException();
       }
     }
+
+    this.logger.error('token not found');
 
     throw new UnauthorizedException();
   }

@@ -3,6 +3,7 @@ import {
   Controller,
   HttpException,
   HttpStatus,
+  Logger,
   Post,
   Request,
   UseGuards,
@@ -18,6 +19,8 @@ import {
 
 @Controller('/tasks')
 export class TaskController {
+  private readonly logger = new Logger(TaskController.name);
+
   constructor(private createTaskUseCase: CreateTaskUseCase) {}
 
   @Post()
@@ -33,6 +36,7 @@ export class TaskController {
         userId: request.user.sub,
       });
     } catch (error) {
+      this.logger.error(error.message);
       throw new HttpException(error.message, HttpStatus.BAD_REQUEST);
     }
   }

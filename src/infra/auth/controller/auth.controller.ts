@@ -4,6 +4,7 @@ import {
   HttpCode,
   HttpException,
   HttpStatus,
+  Logger,
   Post,
   UsePipes,
 } from '@nestjs/common';
@@ -13,6 +14,8 @@ import { signInSchema, SignInSchemaDTO } from '../schemas/sign-in.schema';
 
 @Controller()
 export class AuthController {
+  private readonly logger = new Logger(AuthController.name);
+
   constructor(private readonly signInUseCase: SignInUseCase) {}
 
   @Post('/sign-in')
@@ -23,6 +26,7 @@ export class AuthController {
       const { accessToken } = await this.signInUseCase.execute(signInData);
       return { accessToken };
     } catch (error) {
+      this.logger.error(error.message);
       throw new HttpException(error.message, HttpStatus.UNAUTHORIZED);
     }
   }
